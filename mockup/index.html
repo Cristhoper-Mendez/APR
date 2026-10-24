@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FerreFácil v1.0 | Ferretería y Materiales "El Tornillo de Oro" - Sonsonate</title>
+  
+  <!-- Google Fonts: Outfit (moderna y limpia) + JetBrains Mono (monospaciada para tickets y números) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;800&family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  
+  <!-- Bootstrap 5.3.3 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Bootstrap Icons 1.11.3 -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  
+  <!-- Estilos Personalizados FerreFácil -->
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+  <!-- ==========================================================================
+       CABECERA PRINCIPAL (NAVBAR INDUSTRIAL)
+       ========================================================================== -->
+  <header class="ff-navbar no-print">
+    <div class="container-fluid d-flex justify-content-between align-items-center">
+      
+      <!-- Marca y Negocio -->
+      <a href="#" class="ff-brand">
+        <div class="ff-brand-logo">
+          <i class="bi bi-tools"></i>
+        </div>
+        <div>
+          <div class="ff-brand-title">FERREFÁCIL <span class="badge bg-warning text-dark font-monospace fs-6 px-2 py-0">v1.0</span></div>
+          <div class="ff-brand-subtitle">Ferretería y Materiales "El Tornillo de Oro" | Sonsonate, El Salvador</div>
+        </div>
+      </a>
+
+      <!-- Accesos Rápidos de Cabecera -->
+      <div class="d-flex align-items-center gap-3">
+        <!-- Reloj en vivo -->
+        <div id="live-clock" class="ff-clock-badge d-none d-md-flex">
+          <i class="bi bi-clock-history text-warning"></i> Cargando hora...
+        </div>
+
+        <!-- Botón Modo Accesible -->
+        <button id="btn-toggle-accesible" class="btn btn-sm btn-outline-warning d-flex align-items-center gap-1" title="Aumenta el tamaño de letra y contraste para mayor visibilidad">
+          <i class="bi bi-universal-access"></i> Modo Accesible
+        </button>
+
+        <!-- Botón Restablecer Datos Demostración -->
+        <button id="btn-reset-demo" class="btn btn-sm btn-outline-light text-nowrap" title="Restaura el catálogo y ventas de prueba en dólares">
+          <i class="bi bi-arrow-counterclockwise"></i> Reiniciar Demo
+        </button>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- ==========================================================================
+       NAVEGACIÓN DE PESTAÑAS (MÓDULOS DE CONSULTORÍA)
+       ========================================================================== -->
+  <nav class="ff-nav-tabs no-print">
+    <ul class="nav nav-tabs border-0" id="mainTabs" role="tablist">
+      <li class="nav-item" role="presentation">
+        <button class="nav-link active" id="tab-mostrador" data-bs-toggle="tab" data-bs-target="#content-mostrador" type="button" role="tab">
+          <i class="bi bi-shop text-warning"></i> Mostrador y Venta Rápida
+        </button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="tab-semaforo" data-bs-toggle="tab" data-bs-target="#content-semaforo" type="button" role="tab">
+          <i class="bi bi-traffic-light-fill text-warning"></i> Semáforo de Stock 
+          <span id="badge-semaforo-tab" class="badge ff-tab-badge bg-danger ms-1">3</span>
+        </button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="tab-corte" data-bs-toggle="tab" data-bs-target="#content-corte" type="button" role="tab">
+          <i class="bi bi-cash-coin text-success"></i> Corte Diario de Caja
+        </button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="tab-catalogo" data-bs-toggle="tab" data-bs-target="#content-catalogo" type="button" role="tab">
+          <i class="bi bi-boxes text-primary"></i> Catálogo de Productos
+        </button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="tab-guia" data-bs-toggle="tab" data-bs-target="#content-guia" type="button" role="tab">
+          <i class="bi bi-question-circle-fill text-info"></i> Guía y Manual de Uso
+        </button>
+      </li>
+    </ul>
+  </nav>
+
+  <!-- ==========================================================================
+       CONTENIDO DE LOS MÓDULOS (TAB PANES)
+       ========================================================================== -->
+  <main class="container-fluid py-3 flex-grow-1">
+    <div class="tab-content" id="mainTabsContent">
+
+      <!-- ====================================================================
+           PESTAÑA 1: MOSTRADOR Y VENTA RÁPIDA (OMNIBOX + CANASTA)
+           ==================================================================== -->
+      <div class="tab-pane fade show active" id="content-mostrador" role="tabpanel">
+        <div class="row g-3">
+          
+          <!-- Columna Izquierda: Buscador Omnibox y Cuadrícula de Productos -->
+          <div class="col-lg-7 col-xl-8">
+            
+            <!-- Buscador Omnibox -->
+            <div class="ff-omnibox-wrapper">
+              <i class="bi bi-search ff-omnibox-icon"></i>
+              <input type="text" id="omnibox-input" class="form-control ff-omnibox-input" 
+                     placeholder="Escriba 2 o 3 letras... (ejemplo: tef, codo, broca, clavo, lija)" autofocus autocomplete="off">
+            </div>
+
+            <!-- Filtros Rápidos por Categoría -->
+            <div class="ff-filter-pills">
+              <button class="ff-pill ff-pill-category active" data-category="Todos">Todas las Categorías</button>
+              <button class="ff-pill ff-pill-category" data-category="Plomería">💧 Plomería</button>
+              <button class="ff-pill ff-pill-category" data-category="Electricidad">⚡ Electricidad</button>
+              <button class="ff-pill ff-pill-category" data-category="Tornillería">🔩 Tornillería y Fijación</button>
+              <button class="ff-pill ff-pill-category" data-category="Herramientas">🔨 Herramientas</button>
+              <button class="ff-pill ff-pill-category" data-category="Pintura">🎨 Pintura y Abrasivos</button>
+              <button class="ff-pill ff-pill-category" data-category="Cerrajería">🔑 Cerrajería</button>
+              <button class="ff-pill ff-pill-category" data-category="Adhesivos">🧪 Pegamentos y Selladores</button>
+            </div>
+
+            <!-- Grid de Tarjetas de Productos -->
+            <div id="mostrador-product-grid" class="ff-product-grid">
+              <!-- Renderizado dinámico desde app.js -->
+            </div>
+
+          </div>
+
+          <!-- Columna Derecha: Canasta de Venta y Calculador de Cambio -->
+          <div class="col-lg-5 col-xl-4">
+            <div class="ff-cart-panel">
+              
+              <!-- Cabecera de la Canasta -->
+              <div class="ff-cart-header">
+                <div>
+                  <h5 class="fw-bold mb-0 text-dark">
+                    <i class="bi bi-cart-check-fill text-warning me-1"></i> Nota de Mostrador
+                  </h5>
+                  <small class="text-muted">Artículos seleccionados: <span id="cart-item-count" class="fw-bold">0</span></small>
+                </div>
+                <button class="btn btn-sm btn-outline-danger" onclick="clearCart()" title="Borrar toda la nota">
+                  <i class="bi bi-trash"></i> Cancelar
+                </button>
+              </div>
+
+              <!-- Lista de Artículos -->
+              <div id="cart-items-container" class="ff-cart-items">
+                <!-- Renderizado dinámico desde app.js -->
+              </div>
+
+              <!-- Pie de Canasta: Totales y Calculadora de Cambio -->
+              <div class="ff-cart-footer">
+                
+                <!-- Total a Cobrar (USD) -->
+                <div class="ff-total-display">
+                  <span class="fs-5 fw-bold text-secondary">TOTAL A COBRAR:</span>
+                  <span id="cart-total-amount" class="ff-total-amount">$ 0.00</span>
+                </div>
+
+                <!-- Método de Pago -->
+                <div class="row g-2 mb-2">
+                  <div class="col-6">
+                    <label class="form-label small fw-bold text-muted mb-1">Método de Cobro:</label>
+                    <select id="payment-method-select" class="form-select form-select-sm fw-bold">
+                      <option value="Efectivo" selected>💵 Efectivo (USD)</option>
+                      <option value="Transferencia Chivo / Banco">📱 Chivo / Transferencia</option>
+                      <option value="Tarjeta">💳 Tarjeta Débito/Crédito</option>
+                    </select>
+                  </div>
+                  <div class="col-6" id="cash-calculation-section">
+                    <label class="form-label small fw-bold text-muted mb-1">¿Paga con billete de?:</label>
+                    <div class="input-group input-group-sm">
+                      <span class="input-group-text fw-bold">$</span>
+                      <input type="number" step="0.25" id="cash-received-input" class="form-control fw-bold fs-6 font-monospace" placeholder="0.00">
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Botones de Billetes Rápidos en Dólares ($5, $10, $20, $50) -->
+                <div class="ff-quick-cash" id="quick-cash-buttons">
+                  <button class="btn btn-outline-secondary ff-cash-btn" onclick="setQuickCash(5)">$5</button>
+                  <button class="btn btn-outline-secondary ff-cash-btn" onclick="setQuickCash(10)">$10</button>
+                  <button class="btn btn-outline-secondary ff-cash-btn" onclick="setQuickCash(20)">$20</button>
+                  <button class="btn btn-outline-secondary ff-cash-btn" onclick="setQuickCash(50)">$50</button>
+                </div>
+
+                <!-- Pantalla Gigante de Cambio Accesible -->
+                <div class="ff-change-box">
+                  <div id="ff-change-lbl" class="ff-change-label">Su cambio es:</div>
+                  <div id="ff-change-val" class="ff-change-value">$ 0.00</div>
+                </div>
+
+                <!-- Botón Principal de Cobro -->
+                <button id="btn-finalizar-venta" class="btn btn-success w-100 ff-btn-action" onclick="processCheckout()" disabled>
+                  <i class="bi bi-printer-fill me-2"></i> Cobrar e Imprimir Ticket
+                </button>
+
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ====================================================================
+           PESTAÑA 2: SEMÁFORO DE INVENTARIO Y PEDIDO AL CAMIÓN
+           ==================================================================== -->
+      <div class="tab-pane fade" id="content-semaforo" role="tabpanel">
+        
+        <!-- Tarjetas de Resumen KPI Semáforo -->
+        <div class="row g-3 mb-3">
+          <div class="col-md-4">
+            <div class="ff-kpi-card border-danger">
+              <div class="ff-kpi-icon bg-danger-subtle text-danger">
+                <i class="bi bi-x-octagon-fill"></i>
+              </div>
+              <div>
+                <div id="kpi-agotados-val" class="ff-kpi-val text-danger">0</div>
+                <div class="ff-kpi-label">Artículos Agotados (0 stock)</div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="ff-kpi-card border-warning">
+              <div class="ff-kpi-icon bg-warning-subtle text-warning">
+                <i class="bi bi-exclamation-triangle-fill"></i>
+              </div>
+              <div>
+                <div id="kpi-reorden-val" class="ff-kpi-val text-warning">0</div>
+                <div class="ff-kpi-label">Punto de Reorden (Stock Bajo)</div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="ff-kpi-card border-success">
+              <div class="ff-kpi-icon bg-success-subtle text-success">
+                <i class="bi bi-check-circle-fill"></i>
+              </div>
+              <div>
+                <div id="kpi-optimos-val" class="ff-kpi-val text-success">0</div>
+                <div class="ff-kpi-label">Stock Óptimo y Abastecido</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Barra de Acciones del Semáforo -->
+        <div class="card shadow-sm border-0 mb-3">
+          <div class="card-body d-flex flex-wrap justify-content-between align-items-center gap-2 py-2">
+            
+            <!-- Filtros de Estado -->
+            <div class="btn-group" role="group">
+              <button class="btn btn-outline-dark btn-sm btn-filter-semaforo active" onclick="filterSemaforo('todos', this)">Todos los Productos</button>
+              <button class="btn btn-outline-danger btn-sm btn-filter-semaforo" onclick="filterSemaforo('agotados', this)">🔴 Solo Agotados</button>
+              <button class="btn btn-outline-warning btn-sm btn-filter-semaforo text-dark" onclick="filterSemaforo('reorden', this)">🟡 Solo Reorden</button>
+              <button class="btn btn-outline-success btn-sm btn-filter-semaforo" onclick="filterSemaforo('optimos', this)">🟢 Solo Óptimos</button>
+            </div>
+
+            <!-- Botón de Generar Lista para Camión Proveedor -->
+            <button class="btn btn-warning fw-bold text-dark d-flex align-items-center gap-2" onclick="generateSupplierOrder()">
+              <i class="bi bi-truck fs-5"></i> Generar Pedido para el Camión Proveedor
+            </button>
+
+          </div>
+        </div>
+
+        <!-- Tabla del Semáforo -->
+        <div class="card shadow-sm border-0">
+          <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+              <thead class="table-light">
+                <tr>
+                  <th style="width: 150px;">Estado</th>
+                  <th>Producto y Ubicación</th>
+                  <th class="text-center">Existencia Actual</th>
+                  <th class="text-center">Stock Mínimo</th>
+                  <th class="text-center">Sugerido a Comprar</th>
+                  <th>Proveedor Mayorista</th>
+                </tr>
+              </thead>
+              <tbody id="semaforo-table-body">
+                <!-- Renderizado dinámico desde app.js -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- ====================================================================
+           PESTAÑA 3: CORTE DIARIO DE CAJA (ARQUEO EN USD)
+           ==================================================================== -->
+      <div class="tab-pane fade" id="content-corte" role="tabpanel">
+        
+        <!-- Tarjetas Resumen de Corte -->
+        <div class="row g-3 mb-3">
+          <div class="col-md-3">
+            <div class="ff-kpi-card border-success">
+              <div class="ff-kpi-icon bg-success-subtle text-success">
+                <i class="bi bi-cash-stack"></i>
+              </div>
+              <div>
+                <div id="corte-total-vendido" class="ff-kpi-val text-success">$ 0.00</div>
+                <div class="ff-kpi-label">Ventas Totales del Turno</div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="ff-kpi-card">
+              <div class="ff-kpi-icon bg-light text-primary">
+                <i class="bi bi-wallet2"></i>
+              </div>
+              <div>
+                <div id="corte-efectivo-cajon-esperado" class="ff-kpi-val">$ 0.00</div>
+                <div class="ff-kpi-label">Efectivo Físico en Cajón</div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="ff-kpi-card">
+              <div class="ff-kpi-icon bg-light text-info">
+                <i class="bi bi-qr-code"></i>
+              </div>
+              <div>
+                <div id="corte-total-transferencias" class="ff-kpi-val">$ 0.00</div>
+                <div class="ff-kpi-label">Ventas por Chivo / Transferencia</div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="ff-kpi-card">
+              <div class="ff-kpi-icon bg-light text-warning">
+                <i class="bi bi-graph-up-arrow"></i>
+              </div>
+              <div>
+                <div id="corte-ganancia-estimada" class="ff-kpi-val text-warning">$ 0.00</div>
+                <div class="ff-kpi-label">Ganancia Bruta Estimada</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Acciones de Cierre -->
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <h5 class="fw-bold text-dark mb-0">
+            <i class="bi bi-receipt-cutoff text-warning me-1"></i> Ventas Registradas en el Turno Actual (<span id="corte-clientes-atendidos">0</span> clientes)
+          </h5>
+          <button class="btn btn-primary fw-bold px-4" onclick="openCierreCajaModal()">
+            <i class="bi bi-lock-fill me-1"></i> Realizar Corte de Caja y Cierre de Turno
+          </button>
+        </div>
+
+        <!-- Tabla Historial de Ventas del Turno -->
+        <div class="card shadow-sm border-0">
+          <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+              <thead class="table-light">
+                <tr>
+                  <th>Folio</th>
+                  <th>Hora</th>
+                  <th>Método</th>
+                  <th>Artículos Vendidos</th>
+                  <th class="text-end">Monto Total</th>
+                </tr>
+              </thead>
+              <tbody id="corte-ventas-table-body">
+                <!-- Renderizado dinámico desde app.js -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- ====================================================================
+           PESTAÑA 4: CATÁLOGO Y EDICIÓN RÁPIDA
+           ==================================================================== -->
+      <div class="tab-pane fade" id="content-catalogo" role="tabpanel">
+        
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <div>
+            <h5 class="fw-bold text-dark mb-0">Catálogo Maestro de Productos</h5>
+            <small class="text-muted">Consulte precios de costo, precios al público (USD) y ajuste existencias.</small>
+          </div>
+          <button class="btn btn-success fw-bold" data-bs-toggle="modal" data-bs-target="#modalNuevoProducto">
+            <i class="bi bi-plus-circle-fill me-1"></i> Registrar Nuevo Producto
+          </button>
+        </div>
+
+        <div class="card shadow-sm border-0">
+          <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+              <thead class="table-light">
+                <tr>
+                  <th>Código</th>
+                  <th>Descripción del Producto</th>
+                  <th>Categoría</th>
+                  <th>Costo</th>
+                  <th>Precio Venta</th>
+                  <th class="text-center">Existencia / Mínimo</th>
+                  <th class="text-end">Acciones Rápidas</th>
+                </tr>
+              </thead>
+              <tbody id="catalogo-table-body">
+                <!-- Renderizado dinámico desde app.js -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- ====================================================================
+           PESTAÑA 5: MANUAL Y GUÍA DE USO (ACCESIBLE)
+           ==================================================================== -->
+      <div class="tab-pane fade" id="content-guia" role="tabpanel">
+        
+        <div class="row g-4">
+          <div class="col-lg-8">
+            <div class="card shadow-sm border-0 p-4">
+              <h4 class="fw-bold text-dark mb-2">
+                <i class="bi bi-book-half text-warning me-2"></i> Guía Rápida de Operación en Mostrador
+              </h4>
+              <p class="text-muted">
+                Diseñado para el personal de <strong>Ferretería "El Tornillo de Oro"</strong> en Sonsonate. No requiere conocimientos previos de informática.
+              </p>
+
+              <hr class="my-3">
+
+              <!-- Paso 1 -->
+              <div class="d-flex gap-3 mb-4">
+                <div class="badge bg-primary fs-5 rounded-circle d-flex align-items-center justify-content-center" style="width: 42px; height: 42px; flex-shrink: 0;">1</div>
+                <div>
+                  <h5 class="fw-bold text-dark mb-1">Buscar un Producto en Segundos</h5>
+                  <p class="text-secondary mb-0">
+                    Solo escriba las primeras 2 o 3 letras en la barra grande. Por ejemplo, para buscar <em>Cinta Teflón</em> escriba <strong>"tef"</strong>, o para <em>Codo de PVC</em> escriba <strong>"codo"</strong>. En pantalla verá de inmediato el precio exacto en dólares ($) y el pasillo donde está guardado.
+                  </p>
+                </div>
+              </div>
+
+              <!-- Paso 2 -->
+              <div class="d-flex gap-3 mb-4">
+                <div class="badge bg-warning text-dark fs-5 rounded-circle d-flex align-items-center justify-content-center" style="width: 42px; height: 42px; flex-shrink: 0;">2</div>
+                <div>
+                  <h5 class="fw-bold text-dark mb-1">Cobrar y Dar Cambio sin Usar Calculadora</h5>
+                  <p class="text-secondary mb-0">
+                    Haga clic sobre el botón <strong>"+ Agregar"</strong>. En la columna derecha verá la suma total. Escriba el billete con el que paga el cliente (o pulse los botones rápidos de $5, $10, $20 o $50). El sistema le mostrará en un <strong>recuadro verde gigante</strong> cuánto dinero exacto debe regresarle.
+                  </p>
+                </div>
+              </div>
+
+              <!-- Paso 3 -->
+              <div class="d-flex gap-3 mb-4">
+                <div class="badge bg-danger fs-5 rounded-circle d-flex align-items-center justify-content-center" style="width: 42px; height: 42px; flex-shrink: 0;">3</div>
+                <div>
+                  <h5 class="fw-bold text-dark mb-1">Saber qué Pedirle al Camión Proveedor</h5>
+                  <p class="text-secondary mb-0">
+                    En la pestaña <strong>"Semáforo de Stock"</strong> verá en <span class="badge badge-stock-red">Rojo</span> todo lo que ya se terminó y en <span class="badge badge-stock-yellow">Amarillo</span> lo que está por agotarse. Oprima el botón <strong>"Generar Pedido para el Camión"</strong> y se imprimirá la lista limpia con las piezas sugeridas.
+                  </p>
+                </div>
+              </div>
+
+              <!-- Paso 4 -->
+              <div class="d-flex gap-3">
+                <div class="badge bg-success fs-5 rounded-circle d-flex align-items-center justify-content-center" style="width: 42px; height: 42px; flex-shrink: 0;">4</div>
+                <div>
+                  <h5 class="fw-bold text-dark mb-1">Cierre de Caja al Bajar la Cortina</h5>
+                  <p class="text-secondary mb-0">
+                    Al finalizar el turno, pulse <strong>"Corte Diario de Caja"</strong>. El sistema le dirá cuánto dinero en efectivo ($ USD) debe haber en el cajón y cuánto se recibió por transferencias bancarias o Chivo Wallet.
+                  </p>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <div class="col-lg-4">
+            <div class="card shadow-sm border-0 p-3 bg-light">
+              <h5 class="fw-bold text-dark mb-3">
+                <i class="bi bi-shield-check text-success me-1"></i> Respuestas a Imprevistos
+              </h5>
+
+              <div class="mb-3">
+                <div class="fw-bold text-dark">¿Qué pasa si se va la luz en Sonsonate?</div>
+                <small class="text-muted">Si usa laptop, el sistema sigue funcionando normalmente con la batería. Todas las ventas se guardan al segundo, nada se borra.</small>
+              </div>
+
+              <div class="mb-3">
+                <div class="fw-bold text-dark">¿Cómo activo el modo de letras grandes?</div>
+                <small class="text-muted">En la esquina superior derecha pulse el botón <strong>"Modo Accesible"</strong>. Los textos y números crecerán de tamaño para leerse sin fatiga visual.</small>
+              </div>
+
+              <div>
+                <div class="fw-bold text-dark">¿Necesito internet para cobrar?</div>
+                <small class="text-muted">No. FerreFácil trabaja al 100% de manera local en el mostrador sin consumir datos ni depender de conexión a internet.</small>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </main>
+
+  <!-- ==========================================================================
+       MODAL 1: SIMULADOR DE TICKET TÉRMICO DE COMPRA (SIN NOMBRE PERSONAL)
+       ========================================================================== -->
+  <div class="modal fade" id="modalTicket" tabindex="-1" aria-labelledby="modalTicketLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header bg-light no-print">
+          <h6 class="modal-title fw-bold" id="modalTicketLabel">
+            <i class="bi bi-printer text-success me-1"></i> Comprobante de Venta Térmico (58mm/80mm)
+          </h6>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body p-3 bg-light">
+          <!-- Contenido del Ticket Térmico -->
+          <div id="thermal-ticket-content" class="printable-area">
+            <!-- Renderizado dinámico desde app.js -->
+          </div>
+        </div>
+        <div class="modal-footer no-print">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+          <button type="button" class="btn btn-primary fw-bold" onclick="window.print()">
+            <i class="bi bi-printer-fill me-1"></i> Imprimir Ticket
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       MODAL 2: PEDIDO PARA EL CAMIÓN DISTRIBUIDOR
+       ========================================================================== -->
+  <div class="modal fade" id="modalPedidoCamion" tabindex="-1" aria-labelledby="modalPedidoCamionLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header bg-warning text-dark no-print">
+          <h5 class="modal-title fw-bold" id="modalPedidoCamionLabel">
+            <i class="bi bi-truck me-2"></i> Orden de Compra para el Camión Proveedor
+          </h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body p-0">
+          <div id="supplier-order-content">
+            <!-- Renderizado dinámico desde app.js -->
+          </div>
+        </div>
+        <div class="modal-footer no-print">
+          <button type="button" class="btn btn-outline-success fw-bold" onclick="copyOrderToWhatsApp()">
+            <i class="bi bi-whatsapp me-1"></i> Copiar para WhatsApp
+          </button>
+          <button type="button" class="btn btn-primary fw-bold" onclick="window.print()">
+            <i class="bi bi-printer-fill me-1"></i> Imprimir en Papel
+          </button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       MODAL 3: CIERRE DE CAJA Y ARQUEO DIARIO
+       ========================================================================== -->
+  <div class="modal fade" id="modalCierreCaja" tabindex="-1" aria-labelledby="modalCierreCajaLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header bg-dark text-white">
+          <h5 class="modal-title fw-bold" id="modalCierreCajaLabel">
+            <i class="bi bi-safe2-fill text-warning me-2"></i> Conciliación y Arqueo Diario de Caja ($ USD)
+          </h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body p-4">
+          
+          <div class="row g-2 mb-3 small">
+            <div class="col-6 text-muted">Fondo Inicial en Cajón:</div>
+            <div class="col-6 text-end fw-bold font-monospace" id="cierre-modal-fondo">$ 50.00</div>
+            
+            <div class="col-6 text-muted">Ventas en Efectivo del Turno:</div>
+            <div class="col-6 text-end fw-bold font-monospace text-success" id="cierre-modal-ventas-efectivo">$ 0.00</div>
+
+            <div class="col-6 text-muted">Ventas por Chivo / Transferencia:</div>
+            <div class="col-6 text-end fw-bold font-monospace text-primary" id="cierre-modal-transferencias">$ 0.00</div>
+            
+            <div class="col-12"><hr class="my-1"></div>
+
+            <div class="col-6 fw-bold fs-6">Efectivo Esperado en Cajón:</div>
+            <div class="col-6 text-end fw-bold fs-5 font-monospace text-dark" id="cierre-modal-esperado">$ 0.00</div>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label fw-bold">Efectivo contado físicamente en el cajón ($ USD):</label>
+            <div class="input-group input-group-lg">
+              <span class="input-group-text fw-bold">$</span>
+              <input type="number" step="0.05" id="cierre-modal-efectivo-contado" class="form-control fw-bold font-monospace text-center fs-4" placeholder="0.00">
+            </div>
+          </div>
+
+          <!-- Discrepancia calculada -->
+          <div id="cierre-modal-discrepancia" class="alert alert-success py-2 fw-bold text-center">
+            Calculando conciliación...
+          </div>
+
+          <div class="small text-muted text-center">
+            Al confirmar, se guardará el registro formal del día y la caja quedará lista para el siguiente turno.
+          </div>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <button type="button" class="btn btn-success fw-bold px-4" onclick="confirmCierreCaja()">
+            <i class="bi bi-check2-circle me-1"></i> Confirmar y Archivar Cierre
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       MODAL 4: REGISTRAR NUEVO PRODUCTO
+       ========================================================================== -->
+  <div class="modal fade" id="modalNuevoProducto" tabindex="-1" aria-labelledby="modalNuevoProductoLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header bg-primary text-white">
+          <h5 class="modal-title fw-bold" id="modalNuevoProductoLabel">
+            <i class="bi bi-box-seam me-2"></i> Alta de Nuevo Producto en Catálogo
+          </h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body p-4">
+          
+          <div class="row g-3">
+            <div class="col-8">
+              <label class="form-label small fw-bold">Nombre del Producto / Medida</label>
+              <input type="text" id="new-prod-nombre" class="form-control" placeholder="Ej: Codo Cobre 3/4 pulg">
+            </div>
+            <div class="col-4">
+              <label class="form-label small fw-bold">Código</label>
+              <input type="text" id="new-prod-codigo" class="form-control text-uppercase" placeholder="PLOM-20">
+            </div>
+            <div class="col-6">
+              <label class="form-label small fw-bold">Categoría</label>
+              <select id="new-prod-categoria" class="form-select">
+                <option value="Plomería">Plomería</option>
+                <option value="Electricidad">Electricidad</option>
+                <option value="Tornillería">Tornillería</option>
+                <option value="Herramientas">Herramientas</option>
+                <option value="Pintura">Pintura</option>
+                <option value="Cerrajería">Cerrajería</option>
+                <option value="Adhesivos">Adhesivos</option>
+              </select>
+            </div>
+            <div class="col-6">
+              <label class="form-label small fw-bold">Ubicación en Tienda</label>
+              <input type="text" id="new-prod-ubicacion" class="form-control" placeholder="Pasillo 2 - Repisa 1">
+            </div>
+            <div class="col-6">
+              <label class="form-label small fw-bold">Precio de Costo ($ USD)</label>
+              <input type="number" step="0.05" id="new-prod-precio-costo" class="form-control font-monospace" placeholder="1.25">
+            </div>
+            <div class="col-6">
+              <label class="form-label small fw-bold text-success">Precio de Venta ($ USD)</label>
+              <input type="number" step="0.05" id="new-prod-precio-venta" class="form-control font-monospace fw-bold" placeholder="2.25">
+            </div>
+            <div class="col-6">
+              <label class="form-label small fw-bold">Existencia Inicial</label>
+              <input type="number" id="new-prod-stock-inicial" class="form-control font-monospace" placeholder="20">
+            </div>
+            <div class="col-6">
+              <label class="form-label small fw-bold text-warning">Stock Mínimo Alerta</label>
+              <input type="number" id="new-prod-stock-minimo" class="form-control font-monospace" placeholder="5">
+            </div>
+            <div class="col-12">
+              <label class="form-label small fw-bold">Proveedor Mayorista</label>
+              <input type="text" id="new-prod-proveedor" class="form-control" placeholder="Distribuidora Ferretera de Occidente - Sonsonate">
+            </div>
+          </div>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <button type="button" class="btn btn-success fw-bold" onclick="saveNewProduct()">
+            <i class="bi bi-save2-fill me-1"></i> Guardar en Catálogo
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Contenedor Flotante de Notificaciones Toast -->
+  <div id="toast-container" class="toast-container position-fixed bottom-0 end-0 p-3 no-print" style="z-index: 1090;"></div>
+
+  <!-- ==========================================================================
+       SCRIPTS JAVASCRIPT
+       ========================================================================== -->
+  <!-- Bootstrap 5 Bundle JS (incluye Popper) -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- Datos Semilla en Dólares -->
+  <script src="js/data.js"></script>
+  <!-- Almacenamiento LocalStorage -->
+  <script src="js/store.js"></script>
+  <!-- Lógica Reactiva de la Aplicación -->
+  <script src="js/app.js"></script>
+
+</body>
+</html>
